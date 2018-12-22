@@ -32,9 +32,9 @@
 			Instance = CreateInstance<UsageDatabase>();
 			if (db)
 			{
-				Instance.LogUpdate = db.LogUpdate;
-				Instance.LogChangedFiles = db.LogChangedFiles;
-				Instance.LogWithContext = db.LogWithContext;
+				Instance.LogUpdateInfo = db.LogUpdateInfo;
+				Instance.LogChangedAssets = db.LogChangedAssets;
+				Instance.LogAssetWithContext = db.LogAssetWithContext;
 			}
 			db = Instance;
 			var paths = AssetDatabase.GetAllAssetPaths();
@@ -49,7 +49,7 @@
 				db.AddRefer(paths[i]);
 			}
 			AssetDatabase.CreateAsset(db, DataPath);
-			Debug.Log($"[{nameof(UsageBrowser)}] Database created. {db.CountInfo}", db);
+			Debug.Log($"[{nameof(UsageBrowser)}] Database created. {db.EntryInfo}", db);
 		}
 
 		static bool ShowProgress(string title, int index, int count, bool cancelable = false)

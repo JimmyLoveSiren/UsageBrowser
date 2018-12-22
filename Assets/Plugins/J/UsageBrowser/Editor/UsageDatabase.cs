@@ -10,15 +10,15 @@
 	[PreferBinarySerialization]
 	public sealed partial class UsageDatabase : ScriptableObject, ISerializationCallbackReceiver
 	{
-		public bool LogUpdate;
-		public bool LogChangedFiles;
-		public bool LogWithContext;
+		public bool LogUpdateInfo;
+		public bool LogChangedAssets;
+		public bool LogAssetWithContext;
 
 		[SerializeField, HideInInspector] List<Entry> entries;
 		readonly Dict referDict = new Dict();
 		readonly Dict dependDict = new Dict();
 
-		string CountInfo => $"dep={dependDict.Count} ref={referDict.Count}";
+		string EntryInfo => $"dep={dependDict.Count} ref={referDict.Count}";
 
 		void ISerializationCallbackReceiver.OnBeforeSerialize()
 		{

@@ -44,13 +44,14 @@
 			{
 				var db = Load();
 				if (db == null) return;
-				if (db.LogUpdate)
-					Debug.Log($"[{nameof(UsageBrowser)}] Database updated. changed={Changed.Count} {db.CountInfo}", db);
-				if (db.LogChangedFiles)
-					foreach (string path in Changed)
-						if (db.LogWithContext)
+				if (db.LogUpdateInfo)
+					Debug.Log($"[{nameof(UsageBrowser)}] Database updated. changed={Changed.Count} {db.EntryInfo}", db);
+				if (db.LogChangedAssets)
+					if (db.LogAssetWithContext)
+						foreach (string path in Changed)
 							Debug.Log(path, AssetDatabase.LoadMainAssetAtPath(path));
-						else
+					else
+						foreach (string path in Changed)
 							Debug.Log(path);
 				Changed.Clear();
 				EditorUtility.SetDirty(db);
