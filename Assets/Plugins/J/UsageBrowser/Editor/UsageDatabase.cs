@@ -40,12 +40,11 @@
 
 		void AddRefer(string path, string id = null)
 		{
-			const string prefix = "Assets/";
-			if (!path.StartsWith(prefix)) return;
+			if (Path.IsPathRooted(path)) return;
 			if (id == null) id = AssetDatabase.AssetPathToGUID(path);
 			foreach (string dependPath in AssetDatabase.GetDependencies(path, false))
 			{
-				if (dependPath == path || !dependPath.StartsWith(prefix)) continue;
+				if (dependPath == path || Path.IsPathRooted(dependPath)) continue;
 				AddPair(id, AssetDatabase.AssetPathToGUID(dependPath));
 			}
 		}
