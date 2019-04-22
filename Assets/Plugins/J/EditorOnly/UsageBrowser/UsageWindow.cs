@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-namespace J.EditorOnly.UsageBrowser
+﻿namespace J.EditorOnly.UsageBrowser
 {
 	using System;
 	using Algorithm;
@@ -9,7 +8,7 @@ namespace J.EditorOnly.UsageBrowser
 	using UnityEditor.IMGUI.Controls;
 	using UnityEngine;
 
-	public class UsageWindow : EditorWindow
+	public sealed class UsageWindow : EditorWindow
 	{
 		public static void Show(IEnumerable<SearchNode<string>> search)
 		{
@@ -148,4 +147,3 @@ namespace J.EditorOnly.UsageBrowser
 		}
 	}
 }
-#endif

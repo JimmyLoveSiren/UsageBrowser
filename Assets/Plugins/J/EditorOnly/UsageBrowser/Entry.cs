@@ -1,27 +1,22 @@
-﻿#if UNITY_EDITOR
-namespace J.EditorOnly.UsageBrowser
+﻿namespace J.EditorOnly.UsageBrowser
 {
 	using System;
 	using System.Collections.Generic;
 
-	partial class UsageDatabase
+	[Serializable]
+	sealed class Entry
 	{
-		[Serializable]
-		class Entry
+		public string Id;
+		public List<string> DependIds;
+
+		public Entry()
 		{
-			public string Id;
-			public List<string> DependIds;
+		}
 
-			public Entry()
-			{
-			}
-
-			public Entry(string id, List<string> dependIds)
-			{
-				Id = id;
-				DependIds = dependIds;
-			}
+		public Entry(string id, List<string> dependIds)
+		{
+			Id = id;
+			DependIds = dependIds;
 		}
 	}
 }
-#endif

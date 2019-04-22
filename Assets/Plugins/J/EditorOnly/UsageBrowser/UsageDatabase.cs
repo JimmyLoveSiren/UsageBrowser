@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-namespace J.EditorOnly.UsageBrowser
+﻿namespace J.EditorOnly.UsageBrowser
 {
 	using System;
 	using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace J.EditorOnly.UsageBrowser
 		readonly Dict dependDict = new Dict();
 		bool dirty;
 
-		string EntryInfo => $"dep={dependDict.Count} ref={referDict.Count}";
+		internal string EntryInfo => $"dep={dependDict.Count} ref={referDict.Count}";
 
 		void ISerializationCallbackReceiver.OnBeforeSerialize()
 		{
@@ -43,7 +42,7 @@ namespace J.EditorOnly.UsageBrowser
 			dirty = false;
 		}
 
-		void AddRefer(string path, string id = null)
+		internal void AddRefer(string path, string id = null)
 		{
 			if (Path.IsPathRooted(path)) return;
 			if (id == null) id = AssetDatabase.AssetPathToGUID(path);
@@ -61,7 +60,7 @@ namespace J.EditorOnly.UsageBrowser
 			dirty = true;
 		}
 
-		void RemoveRefer(string id)
+		internal void RemoveRefer(string id)
 		{
 			var dependIds = dependDict.GetOrDefault(id);
 			if (dependIds == null) return;
@@ -95,12 +94,5 @@ namespace J.EditorOnly.UsageBrowser
 
 			return Instance;
 		}
-
-		static class Define
-		{
-			public static readonly string DatabasePath =
-				Path.ChangeExtension(EditorUtilityJ.GetScriptPath<UsageDatabase>(), "asset");
-		}
 	}
 }
-#endif

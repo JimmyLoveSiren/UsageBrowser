@@ -1,13 +1,13 @@
-﻿#if UNITY_EDITOR
-namespace J.EditorOnly.UsageBrowser
+﻿namespace J.EditorOnly.UsageBrowser
 {
+	using UnityEditor;
+
 	sealed class GitIgnore : GitIgnore<GitIgnore>
 	{
-		[UnityEditor.InitializeOnLoadMethod]
+		[InitializeOnLoadMethod]
 		static void OnLoad() => OnLoad(@"
 /UsageDatabase.asset
 /UsageDatabase.asset.meta
 ");
 	}
 }
-#endif

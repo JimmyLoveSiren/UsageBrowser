@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-namespace J.EditorOnly.UsageBrowser
+﻿namespace J.EditorOnly.UsageBrowser
 {
 	using J.Algorithm;
 	using System.Collections.Generic;
@@ -89,4 +88,3 @@ namespace J.EditorOnly.UsageBrowser
 		}
 	}
 }
-#endif

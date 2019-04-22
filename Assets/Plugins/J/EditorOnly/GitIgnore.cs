@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-namespace J.EditorOnly
+﻿namespace J.EditorOnly
 {
 	using System.IO;
 	using UnityEngine;
@@ -17,4 +16,3 @@ namespace J.EditorOnly
 		}
 	}
 }
-#endif
