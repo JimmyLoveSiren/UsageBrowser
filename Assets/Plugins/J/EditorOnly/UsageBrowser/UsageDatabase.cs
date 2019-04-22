@@ -1,5 +1,5 @@
 ﻿#if UNITY_EDITOR
-namespace J.UsageBrowser
+namespace J.EditorOnly.UsageBrowser
 {
 	using System;
 	using System.Collections.Generic;

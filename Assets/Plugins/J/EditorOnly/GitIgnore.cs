@@ -1,4 +1,5 @@
-﻿namespace J
+﻿#if UNITY_EDITOR
+namespace J.EditorOnly
 {
 	using System.IO;
 	using UnityEngine;
@@ -7,7 +8,6 @@
 	{
 		public static void OnLoad()
 		{
-#if UNITY_EDITOR
 			var instance = CreateInstance<T>();
 			var script = UnityEditor.MonoScript.FromScriptableObject(instance);
 			string path = UnityEditor.AssetDatabase.GetAssetPath(script);
@@ -16,9 +16,9 @@
 			if (File.Exists(path)) return;
 			Debug.Log("Create " + path);
 			File.WriteAllText(path, instance.Content);
-#endif
 		}
 
 		public abstract string Content { get; }
 	}
 }
+#endif

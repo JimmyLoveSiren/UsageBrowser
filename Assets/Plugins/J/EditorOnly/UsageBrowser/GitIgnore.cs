@@ -1,7 +1,7 @@
 ﻿#if UNITY_EDITOR
-namespace J.UsageBrowser
+namespace J.EditorOnly.UsageBrowser
 {
-	class GitIgnore : GitIgnore<GitIgnore>
+	sealed class GitIgnore : GitIgnore<GitIgnore>
 	{
 		[UnityEditor.InitializeOnLoadMethod]
 		static void Init() => OnLoad();
