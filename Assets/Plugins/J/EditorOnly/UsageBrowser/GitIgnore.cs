@@ -4,11 +4,10 @@ namespace J.EditorOnly.UsageBrowser
 	sealed class GitIgnore : GitIgnore<GitIgnore>
 	{
 		[UnityEditor.InitializeOnLoadMethod]
-		static void Init() => OnLoad();
-
-		public override string Content =>
-			"/" + nameof(UsageDatabase) + ".asset\n" +
-			"/" + nameof(UsageDatabase) + ".asset.meta\n";
+		static void OnLoad() => OnLoad(@"
+/UsageDatabase.asset
+/UsageDatabase.asset.meta
+");
 	}
 }
 #endif

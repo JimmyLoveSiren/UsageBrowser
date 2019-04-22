@@ -19,14 +19,14 @@ namespace J.EditorOnly.UsageBrowser
 				if (db == null) return;
 				foreach (string path in deleted)
 				{
-					if (path == DataPath) continue;
+					if (path == Define.DatabasePath) continue;
 					Changed.Add(path);
 					db.RemoveRefer(AssetDatabase.AssetPathToGUID(path));
 				}
 
 				foreach (string path in imported)
 				{
-					if (path == DataPath) continue;
+					if (path == Define.DatabasePath) continue;
 					Changed.Add(path);
 					string id = AssetDatabase.AssetPathToGUID(path);
 					db.RemoveRefer(id);

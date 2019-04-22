@@ -6,19 +6,15 @@ namespace J.EditorOnly
 
 	public abstract class GitIgnore<T> : ScriptableObject where T : GitIgnore<T>
 	{
-		public static void OnLoad()
+		public static void OnLoad(string contents)
 		{
-			var instance = CreateInstance<T>();
-			var script = UnityEditor.MonoScript.FromScriptableObject(instance);
-			string path = UnityEditor.AssetDatabase.GetAssetPath(script);
+			string path = EditorUtilityJ.GetScriptPath<T>();
 			if (!path.Contains("Assets/")) return;
 			path = path.Substring(0, path.LastIndexOf('/')) + "/.gitignore";
 			if (File.Exists(path)) return;
 			Debug.Log("Create " + path);
-			File.WriteAllText(path, instance.Content);
+			File.WriteAllText(path, contents);
 		}
-
-		public abstract string Content { get; }
 	}
 }
 #endif

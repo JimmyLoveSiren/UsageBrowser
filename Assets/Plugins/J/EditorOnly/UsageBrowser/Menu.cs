@@ -55,7 +55,7 @@ namespace J.EditorOnly.UsageBrowser
 				db.AddRefer(paths[i]);
 			}
 
-			AssetDatabase.CreateAsset(db, DataPath);
+			AssetDatabase.CreateAsset(db, Define.DatabasePath);
 			Debug.Log($"[{nameof(UsageBrowser)}] Database created. {db.EntryInfo}", db);
 		}
 

@@ -89,27 +89,17 @@ namespace J.EditorOnly.UsageBrowser
 		{
 			if (Instance == null)
 			{
-				Instance = AssetDatabase.LoadAssetAtPath<UsageDatabase>(DataPath);
+				Instance = AssetDatabase.LoadAssetAtPath<UsageDatabase>(Define.DatabasePath);
 				if (Instance == null && createIfNotExists) RebuildDatabase(null);
 			}
 
 			return Instance;
 		}
 
-		public static readonly string DataPath = GetDataPath(true);
-
-		static string GetDataPath(bool relative = false)
+		static class Define
 		{
-			string dataPath = Path.ChangeExtension(CallerInfo.FilePath(), "asset");
-			if (relative)
-			{
-				string cwd = Directory.GetCurrentDirectory();
-				cwd = cwd.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-				cwd += Path.DirectorySeparatorChar;
-				dataPath = new Uri(cwd).MakeRelativeUri(new Uri(dataPath)).ToString();
-			}
-
-			return dataPath;
+			public static readonly string DatabasePath =
+				Path.ChangeExtension(EditorUtilityJ.GetScriptPath<UsageDatabase>(), "asset");
 		}
 	}
 }
