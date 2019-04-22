@@ -1,4 +1,5 @@
-﻿namespace J.UsageBrowser
+﻿#if UNITY_EDITOR
+namespace J.UsageBrowser
 {
 	using System;
 	using Algorithm;
@@ -64,19 +65,21 @@
 		{
 			root = new TreeViewItem(-1, -1);
 			items = new UsageTreeItem[entries.Count];
-			for (var i = 0; i < entries.Count; i++)
+			for (int i = 0; i < entries.Count; i++)
 			{
 				var entry = entries[i];
 				var item = items[i] = new UsageTreeItem(i, entry.Depth, entry.AssetId);
 				if (entry.Parent < 0) root.AddChild(item);
 				else items[entry.Parent].AddChild(item);
 			}
+
 			SetRowHeight(rowHeight);
 			Reload();
 			ExpandAll();
 		}
 
 		float padding;
+
 		public void SetRowHeight(float height)
 		{
 			rowHeight = height;
@@ -96,7 +99,7 @@
 
 		void DrawIcon(RowGUIArgs args)
 		{
-			var item = (UsageTreeItem)args.item;
+			var item = (UsageTreeItem) args.item;
 			if (item?.Path == null) return;
 			var icon = AssetDatabase.GetCachedIcon(item.Path);
 			if (icon == null) return;
@@ -114,9 +117,10 @@
 			if (asset) Selection.activeObject = asset;
 		}
 
-		static readonly char[] SearchSeparator = { ' ' };
+		static readonly char[] SearchSeparator = {' '};
 		string cachedSearch;
 		string[] cachedWords;
+
 		protected override bool DoesItemMatchSearch(TreeViewItem item, string search)
 		{
 			if (cachedSearch != search)
@@ -125,6 +129,7 @@
 				cachedWords = search.ToLower().Split(SearchSeparator, StringSplitOptions.RemoveEmptyEntries);
 				cachedWords = cachedWords.Distinct().ToArray();
 			}
+
 			return cachedWords.All(word => base.DoesItemMatchSearch(item, word));
 		}
 	}
@@ -143,3 +148,4 @@
 		}
 	}
 }
+#endif

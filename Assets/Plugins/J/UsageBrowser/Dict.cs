@@ -1,4 +1,5 @@
-﻿namespace J.UsageBrowser
+﻿#if UNITY_EDITOR
+namespace J.UsageBrowser
 {
 	using System.Collections.Generic;
 
@@ -23,3 +24,4 @@
 		}
 	}
 }
+#endif

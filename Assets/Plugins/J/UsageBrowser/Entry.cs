@@ -1,4 +1,5 @@
-﻿namespace J.UsageBrowser
+﻿#if UNITY_EDITOR
+namespace J.UsageBrowser
 {
 	using System;
 	using System.Collections.Generic;
@@ -11,7 +12,10 @@
 			public string Id;
 			public List<string> DependIds;
 
-			public Entry() { }
+			public Entry()
+			{
+			}
+
 			public Entry(string id, List<string> dependIds)
 			{
 				Id = id;
@@ -20,3 +24,4 @@
 		}
 	}
 }
+#endif

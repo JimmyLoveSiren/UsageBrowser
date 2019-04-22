@@ -1,4 +1,5 @@
-﻿namespace J.UsageBrowser
+﻿#if UNITY_EDITOR
+namespace J.UsageBrowser
 {
 	using System.Collections.Generic;
 	using UnityEditor;
@@ -22,6 +23,7 @@
 					Changed.Add(path);
 					db.RemoveRefer(AssetDatabase.AssetPathToGUID(path));
 				}
+
 				foreach (string path in imported)
 				{
 					if (path == DataPath) continue;
@@ -30,6 +32,7 @@
 					db.RemoveRefer(id);
 					db.AddRefer(path, id);
 				}
+
 				if (Changed.Count > 0)
 				{
 					int version = ++Version;
@@ -59,3 +62,4 @@
 		}
 	}
 }
+#endif

@@ -1,4 +1,5 @@
-﻿namespace J.UsageBrowser
+﻿#if UNITY_EDITOR
+namespace J.UsageBrowser
 {
 	class GitIgnore : GitIgnore<GitIgnore>
 	{
@@ -10,3 +11,4 @@
 			"/" + nameof(UsageDatabase) + ".asset.meta\n";
 	}
 }
+#endif

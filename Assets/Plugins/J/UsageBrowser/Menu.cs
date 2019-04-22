@@ -1,4 +1,5 @@
-﻿namespace J.UsageBrowser
+﻿#if UNITY_EDITOR
+namespace J.UsageBrowser
 {
 	using J.Algorithm;
 	using System.Collections.Generic;
@@ -11,6 +12,7 @@
 
 		[MenuItem(MenuRoot + "Find References")]
 		public static void FindReferences() => FindReferences(Selection.assetGUIDs);
+
 		public static void FindReferences(IEnumerable<string> assetGUIDs)
 		{
 			var db = Load(true);
@@ -19,6 +21,7 @@
 
 		[MenuItem(MenuRoot + "Find Dependencies")]
 		public static void FindDependencies() => FindDependencies(Selection.assetGUIDs);
+
 		public static void FindDependencies(IEnumerable<string> assetGUIDs)
 		{
 			var db = Load(true);
@@ -27,6 +30,7 @@
 
 		[MenuItem(MenuRoot + "Rebuild Database")]
 		public static void RebuildDatabase() => RebuildDatabase(Load());
+
 		static void RebuildDatabase(UsageDatabase db)
 		{
 			Instance = CreateInstance<UsageDatabase>();
@@ -36,6 +40,7 @@
 				Instance.LogChangedAssets = db.LogChangedAssets;
 				Instance.LogAssetWithContext = db.LogAssetWithContext;
 			}
+
 			db = Instance;
 			var paths = AssetDatabase.GetAllAssetPaths();
 			string title = $"[{nameof(UsageBrowser)}] Creating Database";
@@ -46,8 +51,10 @@
 					DestroyImmediate(db);
 					return;
 				}
+
 				db.AddRefer(paths[i]);
 			}
+
 			AssetDatabase.CreateAsset(db, DataPath);
 			Debug.Log($"[{nameof(UsageBrowser)}] Database created. {db.EntryInfo}", db);
 		}
@@ -59,10 +66,11 @@
 				EditorUtility.ClearProgressBar();
 				return false;
 			}
+
 			if ((index & 63) == 0)
 			{
 				string info = $"{index}/{count}";
-				float progress = (float)index / count;
+				float progress = (float) index / count;
 				if (cancelable)
 				{
 					if (EditorUtility.DisplayCancelableProgressBar(title, info, progress))
@@ -76,7 +84,9 @@
 					EditorUtility.DisplayProgressBar(title, info, progress);
 				}
 			}
+
 			return false;
 		}
 	}
 }
+#endif
