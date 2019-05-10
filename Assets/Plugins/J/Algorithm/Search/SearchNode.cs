@@ -1,8 +1,10 @@
 ﻿namespace J.Algorithm
 {
-	public static partial class Search { }
+	public static partial class Search
+	{
+	}
 
-	public class SearchNode<T>
+	public sealed class SearchNode<T>
 	{
 		public readonly int Index;
 		public readonly T Value;

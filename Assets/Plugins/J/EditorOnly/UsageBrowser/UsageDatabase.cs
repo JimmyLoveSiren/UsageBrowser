@@ -1,6 +1,5 @@
 ﻿namespace J.EditorOnly.UsageBrowser
 {
-	using System;
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Linq;
@@ -8,7 +7,7 @@
 	using UnityEngine;
 
 	[PreferBinarySerialization]
-	public sealed partial class UsageDatabase : ScriptableObject, ISerializationCallbackReceiver
+	public sealed class UsageDatabase : ScriptableObject, ISerializationCallbackReceiver
 	{
 		public bool LogUpdateInfo;
 		public bool LogChangedAssets;
@@ -80,7 +79,7 @@
 
 		public IReadOnlyCollection<string> GetDependIds(string id) => dependDict.GetOrDefault(id) ?? Empty;
 
-		static readonly IReadOnlyCollection<string> Empty = Array.AsReadOnly(new string[0]);
+		static readonly IReadOnlyCollection<string> Empty = new string[0];
 
 		static UsageDatabase Instance;
 
@@ -89,10 +88,39 @@
 			if (Instance == null)
 			{
 				Instance = AssetDatabase.LoadAssetAtPath<UsageDatabase>(Define.DatabasePath);
-				if (Instance == null && createIfNotExists) RebuildDatabase(null);
+				if (Instance == null && createIfNotExists) Create(null);
 			}
 
 			return Instance;
+		}
+
+		public static void Rebuild() => Create(Load());
+
+		static void Create(UsageDatabase old)
+		{
+			var db = Instance = CreateInstance<UsageDatabase>();
+			if (old)
+			{
+				db.LogUpdateInfo = old.LogUpdateInfo;
+				db.LogChangedAssets = old.LogChangedAssets;
+				db.LogAssetWithContext = old.LogAssetWithContext;
+			}
+
+			string title = $"[{nameof(UsageBrowser)}] Creating Database";
+			var paths = AssetDatabase.GetAllAssetPaths();
+			for (int i = 0, count = paths.Length; i < count; i++)
+			{
+				if (EditorUtilityJ.DisplayIndexProgress(title, i, count, 200, true))
+				{
+					DestroyImmediate(db);
+					return;
+				}
+
+				db.AddRefer(paths[i]);
+			}
+
+			AssetDatabase.CreateAsset(db, Define.DatabasePath);
+			Debug.Log($"[{nameof(UsageBrowser)}] Database created. {db.EntryInfo}", db);
 		}
 	}
 }
