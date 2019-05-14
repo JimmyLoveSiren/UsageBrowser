@@ -5,14 +5,14 @@
 
 	public static class EditorUtilityJ
 	{
-		public static string GetScriptPath<T>() where T : ScriptableObject
+		public static string GetScriptPathOfScriptableObject<T>() where T : ScriptableObject
 		{
 			var instance = ScriptableObject.CreateInstance<T>();
 			var script = MonoScript.FromScriptableObject(instance);
 			return AssetDatabase.GetAssetPath(script);
 		}
 
-		public static string GetMonoBehaviourPath<T>() where T : MonoBehaviour
+		public static string GetScriptPathOfMonoBehaviour<T>() where T : MonoBehaviour
 		{
 			var go = new GameObject();
 			go.SetActive(false);

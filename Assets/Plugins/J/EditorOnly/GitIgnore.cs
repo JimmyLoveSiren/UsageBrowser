@@ -10,7 +10,7 @@
 
 		public static void OnLoad(Func<string> text)
 		{
-			string path = EditorUtilityJ.GetScriptPath<T>();
+			string path = EditorUtilityJ.GetScriptPathOfScriptableObject<T>();
 			path = path.Substring(0, path.LastIndexOf('/')) + "/.gitignore";
 			if (File.Exists(path)) return;
 			Debug.Log("Create " + path);

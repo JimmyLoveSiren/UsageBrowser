@@ -5,6 +5,6 @@
 	static class Define
 	{
 		public static readonly string DatabasePath =
-			Path.ChangeExtension(EditorUtilityJ.GetScriptPath<UsageDatabase>(), "asset");
+			Path.ChangeExtension(EditorUtilityJ.GetScriptPathOfScriptableObject<UsageDatabase>(), "asset");
 	}
 }
