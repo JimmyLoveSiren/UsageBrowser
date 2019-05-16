@@ -119,8 +119,20 @@
 				db.AddRefer(paths[i]);
 			}
 
-			AssetDatabase.CreateAsset(db, Define.DatabasePath);
-			Debug.Log($"[{nameof(UsageBrowser)}] Database created. {db.EntryInfo}", db);
+			Save(db);
+			Debug.Log($"[{nameof(UsageBrowser)}] Database created. {db.EntryInfo}");
+		}
+
+		static void Save(UsageDatabase db)
+		{
+			string tempPath = AssetDatabase.GenerateUniqueAssetPath("Assets/UsageDatabase.asset");
+			AssetDatabase.CreateAsset(db, tempPath);
+			string metaPath = Define.DatabasePath + ".meta";
+			if (File.Exists(Define.DatabasePath)) File.Delete(Define.DatabasePath);
+			if (File.Exists(metaPath)) File.Delete(metaPath);
+			File.Move(tempPath, Define.DatabasePath);
+			File.Move(tempPath + ".meta", metaPath);
+			AssetDatabase.Refresh();
 		}
 	}
 }

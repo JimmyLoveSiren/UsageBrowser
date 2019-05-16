@@ -5,7 +5,7 @@
 	using UnityEditor;
 	using UnityEngine;
 
-	sealed class Window : EditorWindow, IHasCustomMenu
+	sealed partial class Window : EditorWindow, IHasCustomMenu
 	{
 		const int MaxHistoryCount = 20;
 

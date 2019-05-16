@@ -57,20 +57,20 @@
 			return root;
 		}
 
-		float padding;
+		float m_Padding;
 
 		public void SetRowHeight(float height)
 		{
 			rowHeight = height;
 			extraSpaceBeforeIconAndLabel = rowHeight + 4;
-			padding = (rowHeight - 16) / 2;
+			m_Padding = (rowHeight - 16) / 2;
 		}
 
 		protected override void RowGUI(RowGUIArgs args)
 		{
 			DrawIcon(args);
-			args.rowRect.yMin += padding;
-			args.rowRect.yMax -= padding;
+			args.rowRect.yMin += m_Padding;
+			args.rowRect.yMax -= m_Padding;
 			base.RowGUI(args);
 		}
 
@@ -106,23 +106,23 @@
 
 		protected override void DoubleClickedItem(int id)
 		{
-			if (Select(id)) Menu.Show().New(Selection.assetGUIDs, !m_Query.Reference);
+			if (Select(id)) Window.ShowWindow().New(Selection.assetGUIDs, !m_Query.Reference);
 		}
 
 		static readonly char[] SearchSeparator = {' '};
-		string cachedSearch;
-		string[] cachedWords;
+		string m_CachedSearch;
+		string[] m_CachedWords;
 
 		protected override bool DoesItemMatchSearch(TreeViewItem item, string search)
 		{
-			if (cachedSearch != search)
+			if (m_CachedSearch != search)
 			{
-				cachedSearch = search;
-				cachedWords = search.ToLower().Split(SearchSeparator, StringSplitOptions.RemoveEmptyEntries);
-				cachedWords = cachedWords.Distinct().ToArray();
+				m_CachedSearch = search;
+				m_CachedWords = search.ToLower().Split(SearchSeparator, StringSplitOptions.RemoveEmptyEntries);
+				m_CachedWords = m_CachedWords.Distinct().ToArray();
 			}
 
-			return cachedWords.All(word => base.DoesItemMatchSearch(item, word));
+			return m_CachedWords.All(word => base.DoesItemMatchSearch(item, word));
 		}
 	}
 }

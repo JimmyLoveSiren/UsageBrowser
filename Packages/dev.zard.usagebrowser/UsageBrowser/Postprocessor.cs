@@ -45,7 +45,7 @@
 			var db = UsageDatabase.Load();
 			if (db == null) return;
 			if (db.LogUpdateInfo)
-				Debug.Log($"[{nameof(UsageBrowser)}] Database updated. changed={Changed.Count} {db.EntryInfo}", db);
+				Debug.Log($"[{nameof(UsageBrowser)}] Database updated. changed={Changed.Count} {db.EntryInfo}");
 			if (db.LogChangedAssets)
 				if (db.LogAssetWithContext)
 					foreach (string path in Changed)
