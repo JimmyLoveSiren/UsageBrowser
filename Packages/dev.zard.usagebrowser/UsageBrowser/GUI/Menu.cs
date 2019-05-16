@@ -10,6 +10,7 @@
 		const string LogUpdateInfo = WindowRoot + "Log Update Info";
 		const string LogChangedAssets = WindowRoot + "Log Changed Assets";
 		const string LogAssetWithContext = WindowRoot + "Log Asset with Context";
+		const int SettingsPriority = 2000;
 
 		[MenuItem(ContextRoot + "Find References")]
 		public static void FindReferences()
@@ -26,7 +27,10 @@
 		[MenuItem(WindowRoot + "Show Window")]
 		public static Window ShowWindow() => GetWindow<Window>(Name);
 
-		[MenuItem(LogUpdateInfo)]
+		[MenuItem(WindowRoot + "Rebuild Database")]
+		public static void RebuildDatabase() => UsageDatabase.Rebuild();
+
+		[MenuItem(LogUpdateInfo, priority = SettingsPriority)]
 		public static void ToggleLogUpdateInfo()
 		{
 			var db = UsageDatabase.Load();
@@ -35,7 +39,7 @@
 			EditorUtility.SetDirty(db);
 		}
 
-		[MenuItem(LogChangedAssets)]
+		[MenuItem(LogChangedAssets, priority = SettingsPriority)]
 		public static void ToggleLogChangedAssets()
 		{
 			var db = UsageDatabase.Load();
@@ -44,7 +48,7 @@
 			EditorUtility.SetDirty(db);
 		}
 
-		[MenuItem(LogAssetWithContext)]
+		[MenuItem(LogAssetWithContext, priority = SettingsPriority)]
 		public static void ToggleLogAssetWithContext()
 		{
 			var db = UsageDatabase.Load();
@@ -67,8 +71,5 @@
 
 		[MenuItem(LogAssetWithContext, true)]
 		static bool ValidLogAssetWithContext() => Menu.GetChecked(LogChangedAssets);
-
-		[MenuItem(WindowRoot + "Rebuild Database")]
-		public static void RebuildDatabase() => UsageDatabase.Rebuild();
 	}
 }
