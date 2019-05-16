@@ -1,9 +1,9 @@
 {
     "name": "J.EditorOnly.UsageBrowser.GUI",
     "references": [
-        "GUID:d30d715cb8b5a4a079e122ad903a3171",
-        "GUID:0a63c372af406418488f264dacd63632",
-        "GUID:0fe26befa233d4b46ad73c5b6454d287"
+        "J",
+        "J.EditorOnly",
+        "J.EditorOnly.UsageBrowser"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [
@@ -14,6 +14,5 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": []
+    "defineConstraints": []
 }
