@@ -83,6 +83,22 @@
 		public SearchExpander<string> GetRelationExpander(bool reference) =>
 			reference ? (SearchExpander<string>) GetReferenceIds : GetDependencyIds;
 
+		public IEnumerable<T> LoadRelationAssets<T>(Object asset, bool reference, int maxDepth = -1)
+			where T : Object => LoadRelationAssets<T>(new[] {asset}, reference, maxDepth);
+
+		public IEnumerable<T> LoadRelationAssets<T>(IEnumerable<Object> assets, bool reference, int maxDepth = -1)
+			where T : Object
+		{
+			var start = assets.Select(asset => AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(asset)));
+			var expander = GetRelationExpander(reference).ToNodeExpander();
+			foreach (var node in Search.BreadthFirst(start, expander, maxDepth))
+				if (node.Depth > 0)
+				{
+					var relationAsset = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(node.Value));
+					if (relationAsset) yield return relationAsset;
+				}
+		}
+
 		static readonly IReadOnlyCollection<string> Empty = new string[0];
 
 		static UsageDatabase Instance;
