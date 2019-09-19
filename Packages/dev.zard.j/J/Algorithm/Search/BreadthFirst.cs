@@ -1,12 +1,21 @@
 ﻿namespace J.Algorithm
 {
-	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 
 	partial class Search
 	{
 		public static IEnumerable<SearchNode<T>> BreadthFirst<T>(IEnumerable<T> start,
-			Func<T, IEnumerable<T>> expander, int maxDepth = -1)
+			SearchNodeExpander<T> expander, int maxDepth) => maxDepth >= 0
+			? BreadthFirst(start, expander, node => node.Depth < maxDepth)
+			: BreadthFirst(start, expander);
+
+		public static IEnumerable<SearchNode<T>> BreadthFirst<T>(IEnumerable<T> start,
+			SearchNodeExpander<T> expander, SearchFilter<T> expandFilter) => expandFilter != null
+			? BreadthFirst(start, node => expandFilter(node) ? expander(node) : Enumerable.Empty<T>())
+			: BreadthFirst(start, expander);
+
+		public static IEnumerable<SearchNode<T>> BreadthFirst<T>(IEnumerable<T> start, SearchNodeExpander<T> expander)
 		{
 			var visit = new HashSet<T>();
 			var queue = new Queue<SearchNode<T>>();
@@ -18,10 +27,9 @@
 			{
 				var node = queue.Dequeue();
 				yield return node;
-				if (maxDepth < 0 || node.Depth < maxDepth)
-					foreach (var value in expander(node.Value))
-						if (visit.Add(value))
-							queue.Enqueue(new SearchNode<T>(count++, value, node));
+				foreach (var value in expander(node))
+					if (visit.Add(value))
+						queue.Enqueue(new SearchNode<T>(count++, value, node));
 			}
 		}
 	}
