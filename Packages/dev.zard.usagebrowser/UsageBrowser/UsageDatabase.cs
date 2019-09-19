@@ -1,5 +1,6 @@
 ﻿namespace J.EditorOnly.UsageBrowser
 {
+	using J.Algorithm;
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Linq;
@@ -75,9 +76,12 @@
 			dirty = true;
 		}
 
-		public IReadOnlyCollection<string> GetReferIds(string id) => referDict.GetOrDefault(id) ?? Empty;
+		public IReadOnlyCollection<string> GetReferenceIds(string guid) => referDict.GetOrDefault(guid) ?? Empty;
 
-		public IReadOnlyCollection<string> GetDependIds(string id) => dependDict.GetOrDefault(id) ?? Empty;
+		public IReadOnlyCollection<string> GetDependencyIds(string guid) => dependDict.GetOrDefault(guid) ?? Empty;
+
+		public SearchExpander<string> GetRelationExpander(bool reference) =>
+			reference ? (SearchExpander<string>) GetReferenceIds : GetDependencyIds;
 
 		static readonly IReadOnlyCollection<string> Empty = new string[0];
 

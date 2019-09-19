@@ -31,10 +31,8 @@
 				var db = UsageDatabase.Load();
 				if (db)
 				{
-					var expander = m_Query.Reference
-						? (Func<string, IEnumerable<string>>) db.GetReferIds
-						: db.GetDependIds;
-					foreach (var node in Search.BreadthFirst(m_Query.Source, expander))
+					foreach (var node in Search.BreadthFirst(m_Query.Source,
+						db.GetRelationExpander(m_Query.Reference).ToNodeExpander()))
 					{
 						var item = new TreeItem(node.Index, node.Depth, node.Value);
 						m_List.Add(item);
